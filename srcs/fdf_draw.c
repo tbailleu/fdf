@@ -24,30 +24,22 @@ void	draw_point(t_point point, t_env *env, int color)
 
 void	draw_line(t_point p1, t_point p2, t_env *env)
 {
-	double	dtab[6];
-	int		isfin;
+	double  dx;
+	double  dy;
+	int     i;
 
 	if (!is_on_screen(p1) && !is_on_screen(p2))
 		return ;
-	dtab[0] = fabs(p1.x - p2.x);
-	dtab[1] = fabs(p1.y - p2.y);
-	dtab[2] = p1.x < p2.x ? 1 : -1;
-	dtab[3] = p1.y < p2.y ? 1 : -1;
-	dtab[4] = 0.5 * (dtab[0] > dtab[1] ? dtab[0] : -dtab[1]);
-	isfin = 0;
-	while (isfin == 0 && !((int)p1.x == (int)p2.x && (int)p1.y == (int)p2.y))
+	i = BLOC_SIZE * fmax(fabs(p1.x - p2.x), fabs(p1.y - p2.y)) / 5;
+	i = i ? i : 1;
+	dx = (p1.x - p2.x) / i;
+	dy = (p1.y - p2.y) / i;
+	while (i)
 	{
+		i--;
 		(is_on_screen(p1) == 1) ? draw_point(p1, env, get_color(p1, p2)) : 42;
-		dtab[5] = dtab[4];
-		isfin = 1;
-		if (dtab[5] > -dtab[0] && (int)p1.x != (int)p2.x && (isfin = 0) == 0)
-			dtab[4] -= dtab[1];
-		if (dtab[5] > -dtab[0] && (int)p1.x != (int)p2.x && (isfin = 0) == 0)
-			p1.x += dtab[2];
-		if (dtab[5] < dtab[1] && (int)p1.y != (int)p2.y && (isfin = 0) == 0)
-			dtab[4] += dtab[0];
-		if (dtab[5] < dtab[1] && (int)p1.y != (int)p2.y && (isfin = 0) == 0)
-			p1.y += dtab[3];
+		p1.x += dx;
+		p1.y += dy;
 	}
 }
 
@@ -82,6 +74,6 @@ int		print_frame(t_env *env)
 {
 	draw_map(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, -50, -50);
-	bzero(env->pixel_img, (WIN_HEIGHT + PAD_TOP)*env->line_size);
+	bzero(env->pixel_img, (WIN_HEIGHT + PAD_TOP) * env->line_size);
 	return (0);
 }

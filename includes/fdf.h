@@ -18,9 +18,7 @@
 
 # define PAD_TOP 100
 # define PAD_LEFT 100
-# define BLOC_WIDTH 20
-# define BLOC_HEIGHT 20
-# define BLOC_DEPTH 20
+# define BLOC_SIZE 20
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080

@@ -27,11 +27,11 @@ int		parse_line(char *line, int nb_line, t_point ***points, int i)
 	{
 		ft_throw_error(!(point = (t_point*)malloc(sizeof(t_point))),
 			"malloc(): Not enough memory");
-		point->x = i * BLOC_WIDTH;
-		point->y = nb_line * BLOC_HEIGHT;
-		point->z = -ft_atoi(astr[i]) * BLOC_DEPTH / 5;
+		point->x = i * BLOC_SIZE;
+		point->y = nb_line * BLOC_SIZE;
+		point->z = -ft_atoi(astr[i]) * BLOC_SIZE / 5;
 		point->s = 1;
-		point->color_z = -point->z / BLOC_DEPTH * 5;
+		point->color_z = -point->z / BLOC_SIZE * 5;
 		(*points)[i] = point;
 		free(astr[i++]);
 	}
